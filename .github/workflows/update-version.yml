@@ -1,0 +1,44 @@
+﻿name: Update Version
+
+on:
+  workflow_call:
+    inputs:
+      app-name:
+        required: true
+        type: string
+      app-path:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compute lowercase owner
+        id: vars
+        run: echo "owner_lc=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ inputs.app-path }}/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ steps.vars.outputs.owner_lc }}/${{ inputs.app-name }}:${{ inputs.version }}
+            ghcr.io/${{ steps.vars.outputs.owner_lc }}/${{ inputs.app-name }}:latest

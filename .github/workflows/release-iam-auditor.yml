@@ -1,0 +1,17 @@
+﻿name: Release iam-auditor
+
+on:
+  push:
+    tags:
+      - "iam-auditor-v*"
+
+jobs:
+  release:
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/update-version.yml
+    with:
+      app-name: iam-auditor
+      app-path: apps/iam-auditor
+      version: ${{ github.ref_name }}
