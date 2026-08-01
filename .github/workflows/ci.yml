@@ -1,0 +1,29 @@
+name: iam-auditor CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -e packages/audit-common
+          pip install -e apps/iam-auditor
+          pip install pytest ruff
+
+      - name: Lint
+        run: ruff check apps/iam-auditor
+
+      - name: Test
+        run: pytest apps/iam-auditor/tests
