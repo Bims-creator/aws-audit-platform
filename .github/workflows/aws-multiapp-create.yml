@@ -22,7 +22,7 @@ jobs:
         id: vars
         run: |
           APP_NAME="${{ inputs.app-name }}"
-          APP_MODULE=$(echo "$APP_NAME" | tr '"'"'-'"'"' '"'"'_'"'"')
+          APP_MODULE=$(echo "$APP_NAME" | tr '-' '_')
           echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
           echo "app_module=$APP_MODULE" >> $GITHUB_OUTPUT
 
