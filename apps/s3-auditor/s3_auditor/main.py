@@ -1,8 +1,8 @@
-﻿from s3_auditor.checks import check_placeholder
+﻿from s3_auditor.checks import check_public_buckets, check_unencrypted_buckets
 
 
 def main():
-    findings = check_placeholder()
+    findings = check_public_buckets() + check_unencrypted_buckets()
     if not findings:
         print("No findings.")
         return

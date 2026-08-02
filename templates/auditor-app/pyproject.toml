@@ -1,4 +1,4 @@
-﻿[project]
+[project]
 name = "__APP_NAME__"
 version = "0.1.0"
 description = "Auditor for __APP_NAME__"

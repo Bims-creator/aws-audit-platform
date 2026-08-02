@@ -1,4 +1,4 @@
-﻿[project]
+[project]
 name = "s3-auditor"
 version = "0.1.0"
 description = "Auditor for s3-auditor"
